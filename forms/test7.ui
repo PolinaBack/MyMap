@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Step_1_of_10</class>
+ <widget class="QWidget" name="Step_1_of_10">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>821</width>
+    <height>545</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgba(41, 92, 92, 200)</string>
+  </property>
+  <widget class="QWidget" name="gridLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>801</width>
+     <height>531</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+font-family: 'Arial' 'Optima';
+font: bold;
+font-size: 18pt;
+color: rgba(255, 255, 255, 255);
+margin-left: 10px;
+margin-top: 10 px;
+}</string>
+      </property>
+      <property name="text">
+       <string>Сколько времени на отдых у вас есть..</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <spacer name="verticalSpacer_3">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="7" column="0">
+     <spacer name="verticalSpacer_4">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="4" column="0">
+     <widget class="QRadioButton" name="winter">
+      <property name="styleSheet">
+       <string notr="true">QRadioButton {
+background-color: rgba(0,0, 0, 0);
+border: 2px solid rgba(127, 57, 91, 255);
+border-style: inset;
+border-radius: 5px;
+padding: 12px;
+font-size: 15pt;
+color: rgba(255, 255, 255, 230);
+margin-left: 10px;
+margin-right: 10px;
+}
+
+QRadioButton:hover {
+background-color: qconicalgradient(cx:0.431909, cy:1, angle:270.1, stop:0 rgba(0, 0, 0, 255), stop:0.39548 rgba(191, 112, 151, 100));
+}</string>
+      </property>
+      <property name="text">
+       <string>одна неделя</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="3" column="0">
+     <spacer name="verticalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="8" column="0">
+     <widget class="QRadioButton" name="radioButton">
+      <property name="styleSheet">
+       <string notr="true">QRadioButton {
+background-color: rgba(0,0, 0, 0);
+border: 2px solid rgba(127, 57, 91, 255);
+border-style: inset;
+border-radius: 5px;
+padding: 12px;
+font-size: 15pt;
+color: rgba(255, 255, 255, 230);
+margin-left: 10px;
+margin-right: 10px;
+}
+
+QRadioButton:hover {
+background-color: qconicalgradient(cx:0.431909, cy:1, angle:270.1, stop:0 rgba(0, 0, 0, 255), stop:0.39548 rgba(191, 112, 151, 100));
+}</string>
+      </property>
+      <property name="text">
+       <string>больше двух недель</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QRadioButton" name="summer">
+      <property name="styleSheet">
+       <string notr="true">QRadioButton {
+background-color: rgba(0,0, 0, 0);
+border: 2px solid rgba(127, 57, 91, 255);
+border-style: inset;
+border-radius: 5px;
+padding: 12px;
+font-size: 15pt;
+color: rgba(255, 255, 255, 230);
+margin-left: 10px;
+margin-right: 10px;
+}
+
+QRadioButton:hover {
+background-color: qconicalgradient(cx:0.431909, cy:1, angle:270.1, stop:0 rgba(0, 0, 0, 255), stop:0.39548 rgba(191, 112, 151, 100));
+}</string>
+      </property>
+      <property name="text">
+       <string>парочка дней</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="0">
+     <widget class="QRadioButton" name="autmn_spirng">
+      <property name="styleSheet">
+       <string notr="true">QRadioButton {
+background-color: rgba(0,0, 0, 0);
+border: 2px solid rgba(127, 57, 91, 255);
+border-style: inset;
+border-radius: 5px;
+padding: 12px;
+font-size: 15pt;
+color: rgba(255, 255, 255, 230);
+margin-left: 10px;
+margin-right: 10px;
+}
+
+QRadioButton:hover {
+background-color: qconicalgradient(cx:0.431909, cy:1, angle:270.1, stop:0 rgba(0, 0, 0, 255), stop:0.39548 rgba(191, 112, 151, 100));
+}</string>
+      </property>
+      <property name="text">
+       <string>две недели</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="0">
+     <spacer name="verticalSpacer_5">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="10" column="0">
+     <widget class="QPushButton" name="pushButton">
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+background-color: rgba(127, 143, 24, 100);
+border-radius: 5px;
+padding: 10px;
+font-size: 12pt;
+color: rgba(255, 255, 255, 200);
+margin-left: 120px;
+margin-right: 120px;
+}
+QPushButton:hover {
+background-color: rgba(127, 143, 24, 200);
+}</string>
+      </property>
+      <property name="text">
+       <string>Далее</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
