@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>757</width>
+    <height>545</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgba(41, 92, 92, 200)</string>
+  </property>
+  <widget class="QPushButton" name="log_in">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>380</y>
+     <width>291</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+background-color: rgba(0,0, 0, 0);
+border: 2px solid rgba(127, 57, 91, 255);
+border-style: inset;
+border-radius: 5px;
+padding: 12px;
+font-size: 15pt;
+color: rgba(255, 255, 255, 230);
+margin-left: 10px;
+margin-right: 10px;
+}
+
+QPushButton:hover {
+background-color: qconicalgradient(cx:0.431909, cy:1, angle:270.1, stop:0 rgba(0, 0, 0, 255), stop:0.39548 rgba(191, 112, 151, 100));
+}</string>
+   </property>
+   <property name="text">
+    <string>Войти</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="sign_up">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>380</y>
+     <width>291</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+background-color: rgba(0,0, 0, 0);
+border: 2px solid rgba(127, 57, 91, 255);
+border-style: inset;
+border-radius: 5px;
+padding: 12px;
+font-size: 15pt;
+color: rgba(255, 255, 255, 230);
+margin-left: 10px;
+margin-right: 10px;
+}
+
+QPushButton:hover {
+background-color: qconicalgradient(cx:0.431909, cy:1, angle:270.1, stop:0 rgba(0, 0, 0, 255), stop:0.39548 rgba(191, 112, 151, 100));
+}</string>
+   </property>
+   <property name="text">
+    <string>Зарегистрироваться</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_3">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>470</y>
+     <width>291</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+background-color: rgba(0,0, 0, 0);
+border: 2px solid rgba(127, 57, 91, 255);
+border-style: inset;
+border-radius: 5px;
+padding: 12px;
+font-size: 15pt;
+color: rgba(255, 255, 255, 230);
+margin-left: 10px;
+margin-right: 10px;
+}
+
+QPushButton:hover {
+background-color: qconicalgradient(cx:0.431909, cy:1, angle:270.1, stop:0 rgba(0, 0, 0, 255), stop:0.39548 rgba(191, 112, 151, 100));
+}</string>
+   </property>
+   <property name="text">
+    <string>Назад</string>
+   </property>
+  </widget>
+  <widget class="QFrame" name="frame_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>150</y>
+     <width>361</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgba(191, 112, 151, 200);
+border-radius: 10px;</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>341</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+font-family: 'Arial' 'Optima';
+font: bold;
+font-size: 16pt;
+color: rgba(255, 255, 255, 255);
+margin-left: 3px;
+background-color: rgba(41, 92, 92, 200);
+}</string>
+    </property>
+    <property name="text">
+     <string>Введите логин пользователя</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QFrame" name="frame_3">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>250</y>
+     <width>361</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgba(191, 112, 151, 200);
+border-radius: 10px;</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>20</y>
+      <width>191</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+font-family: 'Arial' 'Optima';
+font: bold;
+font-size: 16pt;
+color: rgba(255, 255, 255, 255);
+margin-left: 3px;
+background-color: rgba(41, 92, 92, 200);
+}</string>
+    </property>
+    <property name="text">
+     <string>Введите пароль</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QFrame" name="frame_4">
+   <property name="geometry">
+    <rect>
+     <x>390</x>
+     <y>250</y>
+     <width>361</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgba(191, 112, 151, 200);
+border-radius: 10px;</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QLineEdit" name="pass_edit">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>20</y>
+      <width>291</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLineEdit {
+border: 2px solid rgba(255, 255, 255, 255);
+font-size: 16pt;
+color: white;
+background-color: rgba(41, 92, 92, 200);
+}</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QFrame" name="frame_5">
+   <property name="geometry">
+    <rect>
+     <x>390</x>
+     <y>150</y>
+     <width>361</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgba(191, 112, 151, 200);
+border-radius: 10px;</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QLineEdit" name="login_edit">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>20</y>
+      <width>291</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLineEdit {
+border: 2px solid rgba(255, 255, 255, 255);
+font-size: 16pt;
+color: white;
+background-color: rgba(41, 92, 92, 200);
+}</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>40</y>
+     <width>181</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+font-family: 'Arial' 'Optima';
+font: bold;
+font-size: 18pt;
+color: rgba(255, 255, 255, 255);
+margin-left: 3px;
+background-color: rgba(41, 92, 92, 200);
+border: 2px solid rgba(191, 112, 151 255);
+border-style: inset;
+border-radius: 5px;
+}
+</string>
+   </property>
+   <property name="text">
+    <string>Авторизация</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

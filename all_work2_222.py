@@ -8,6 +8,7 @@ from folium.plugins import MarkerCluster
 from PyQt5 import uic, QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget
 from testing import Test1_form
+from authorisation import Another_autharisation
 from PyQt5.Qt import *
 import math
 from folium.plugins import Geocoder
@@ -239,7 +240,7 @@ class Entering(QWidget):
         self.close()
 
     def parol(self):
-        self.parols = Admin_form()
+        self.parols = Another_autharisation()
         self.close()
         self.parols.show()
 
@@ -518,14 +519,12 @@ class MyApp(QWidget):
         self.name_label = QLabel(self)
         self.name_label.setText("")
         self.name_label.move(10, 10)
-        self.window_width, self.window_height = 750, 545
+        self.window_width, self.window_height = 770, 545
         self.setMinimumSize(self.window_width, self.window_height)
         try:
             # Создание базы карты
             self.m = folium.Map(location=[64.31828134466166, 93.04953260959422], zoom_start=3)
             # Добавление фильтров и разных видов карт
-            folium.TileLayer('Stamen Toner').add_to(self.m)
-            folium.TileLayer('Stamen Terrain').add_to(self.m)
             Geocoder().add_to(self.m)
             # Создание отдельного фильтра для показателя на карте
             self.fg = folium.FeatureGroup(name='Курорты в горах', show=show_mountains)
