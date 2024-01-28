@@ -139,7 +139,7 @@ background-color: qconicalgradient(cx:0.431909, cy:1, angle:270.1, stop:0 rgba(0
 }</string>
       </property>
       <property name="text">
-       <string>лежите на пляже</string>
+       <string>отдыхаете на пляже</string>
       </property>
      </widget>
     </item>

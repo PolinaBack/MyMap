@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>757</width>
+    <height>545</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgba(41, 92, 92, 200)</string>
+  </property>
+  <widget class="QPushButton" name="redact_last_button">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>370</y>
+     <width>411</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+background-color: rgba(0,0, 0, 0);
+border: 2px solid rgba(127, 57, 91, 255);
+border-style: inset;
+border-radius: 5px;
+padding: 12px;
+font-size: 15pt;
+color: rgba(255, 255, 255, 230);
+margin-left: 10px;
+margin-right: 10px;
+}
+
+QPushButton:hover {
+background-color: qconicalgradient(cx:0.431909, cy:1, angle:270.1, stop:0 rgba(0, 0, 0, 255), stop:0.39548 rgba(191, 112, 151, 100));
+}</string>
+   </property>
+   <property name="text">
+    <string>Редактировать прошедшие поездки</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="add_button">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>370</y>
+     <width>291</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+background-color: rgba(0,0, 0, 0);
+border: 2px solid rgba(127, 57, 91, 255);
+border-style: inset;
+border-radius: 5px;
+padding: 12px;
+font-size: 15pt;
+color: rgba(255, 255, 255, 230);
+margin-left: 10px;
+margin-right: 10px;
+}
+
+QPushButton:hover {
+background-color: qconicalgradient(cx:0.431909, cy:1, angle:270.1, stop:0 rgba(0, 0, 0, 255), stop:0.39548 rgba(191, 112, 151, 100));
+}</string>
+   </property>
+   <property name="text">
+    <string>Добавить новую поездку</string>
+   </property>
+  </widget>
+  <widget class="QFrame" name="frame_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>150</y>
+     <width>441</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgba(191, 112, 151, 200);
+border-radius: 10px;</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>20</y>
+      <width>341</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+font-family: 'Arial' 'Optima';
+font: bold;
+font-size: 16pt;
+color: rgba(255, 255, 255, 255);
+margin-left: 3px;
+background-color: rgba(41, 92, 92, 200);
+}</string>
+    </property>
+    <property name="text">
+     <string>Общее количество поездок</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QFrame" name="frame_3">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>250</y>
+     <width>441</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgba(191, 112, 151, 200);
+border-radius: 10px;</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>20</y>
+      <width>431</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+font-family: 'Arial' 'Optima';
+font: bold;
+font-size: 16pt;
+color: rgba(255, 255, 255, 255);
+margin-left: 3px;
+background-color: rgba(41, 92, 92, 200);
+}</string>
+    </property>
+    <property name="text">
+     <string>Общее количество посещенных мест</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QFrame" name="frame_4">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>250</y>
+     <width>281</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgba(191, 112, 151, 200);
+border-radius: 10px;</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QWidget" name="gridLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>20</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_4">
+     <item row="0" column="0">
+      <widget class="QLabel" name="place_label">
+       <property name="styleSheet">
+        <string notr="true">QLabel {
+font-family: 'Arial' 'Optima';
+font: bold;
+font-size: 16pt;
+color: rgba(255, 255, 255, 255);
+margin-left: 3px;
+background-color: rgba(41, 92, 92, 200);
+}</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QFrame" name="frame_5">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>150</y>
+     <width>281</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgba(191, 112, 151, 200);
+border-radius: 10px;</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QWidget" name="gridLayoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>20</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_6">
+     <item row="0" column="0">
+      <widget class="QLabel" name="travels_label">
+       <property name="styleSheet">
+        <string notr="true">QLabel {
+font-family: 'Arial' 'Optima';
+font: bold;
+font-size: 16pt;
+color: rgba(255, 255, 255, 255);
+margin-left: 3px;
+background-color: rgba(41, 92, 92, 200);
+}</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>30</y>
+     <width>741</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_3">
+    <item row="1" column="0">
+     <widget class="QLabel" name="label">
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+font-family: 'Arial' 'Optima';
+font: bold;
+font-size: 18pt;
+color: rgba(255, 255, 255, 255);
+margin-left: 3px;
+background-color: rgba(41, 92, 92, 200);
+border: 2px solid rgba(191, 112, 151 255);
+border-style: inset;
+border-radius: 5px;
+}
+</string>
+      </property>
+      <property name="text">
+       <string>Приветствуем,</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+   </layout>
+   <zorder>horizontalSpacer</zorder>
+   <zorder>label</zorder>
+  </widget>
+  <widget class="QFrame" name="frame">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>761</width>
+     <height>551</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgba(41, 90, 92, 255)</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>460</x>
+      <y>460</y>
+      <width>291</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+background-color: rgba(0,0, 0, 0);
+border: 2px solid rgba(127, 57, 91, 255);
+border-style: inset;
+border-radius: 5px;
+padding: 12px;
+font-size: 15pt;
+color: rgba(255, 255, 255, 230);
+margin-left: 10px;
+margin-right: 10px;
+}
+
+QPushButton:hover {
+background-color: qconicalgradient(cx:0.431909, cy:1, angle:270.1, stop:0 rgba(0, 0, 0, 255), stop:0.39548 rgba(191, 112, 151, 100));
+}</string>
+    </property>
+    <property name="text">
+     <string>Назад</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="tomap">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>460</y>
+      <width>411</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+background-color: rgba(0,0, 0, 0);
+border: 2px solid rgba(127, 57, 91, 255);
+border-style: inset;
+border-radius: 5px;
+padding: 12px;
+font-size: 15pt;
+color: rgba(255, 255, 255, 230);
+margin-left: 10px;
+margin-right: 10px;
+}
+
+QPushButton:hover {
+background-color: qconicalgradient(cx:0.431909, cy:1, angle:270.1, stop:0 rgba(0, 0, 0, 255), stop:0.39548 rgba(191, 112, 151, 100));
+}</string>
+    </property>
+    <property name="text">
+     <string>Посмотреть свою карту</string>
+    </property>
+   </widget>
+  </widget>
+  <zorder>frame</zorder>
+  <zorder>redact_last_button</zorder>
+  <zorder>add_button</zorder>
+  <zorder>frame_2</zorder>
+  <zorder>frame_3</zorder>
+  <zorder>frame_4</zorder>
+  <zorder>frame_5</zorder>
+  <zorder>gridLayoutWidget</zorder>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

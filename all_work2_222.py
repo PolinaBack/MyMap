@@ -513,7 +513,7 @@ class Changing(QWidget):
 
 # класс по работе с картой (основная задумка)
 class MyApp(QWidget):
-    def __init__(self, show_museums=False, show_sanatories=False, show_seas=False, show_mountains=False):
+    def __init__(self, show_museums=False, show_sanatories=False, show_seas=False, show_mountains=False, username=None):
         super().__init__()
         self.setWindowTitle('Карта')
         self.name_label = QLabel(self)
@@ -521,6 +521,7 @@ class MyApp(QWidget):
         self.name_label.move(10, 10)
         self.window_width, self.window_height = 770, 545
         self.setMinimumSize(self.window_width, self.window_height)
+        self.flag = False
         try:
             # Создание базы карты
             self.m = folium.Map(location=[64.31828134466166, 93.04953260959422], zoom_start=3)
@@ -543,6 +544,11 @@ class MyApp(QWidget):
             self.museums()
             self.seas_resort()
 
+            if username != None:
+                self.usernamers = folium.FeatureGroup(name='Мои поездки', show=True)
+                self.m.add_child(self.usernamers)
+                self.func_for_username(username)
+
             folium.LayerControl().add_to(self.m)
 
             # ПЕРЕВОД В QT
@@ -557,12 +563,17 @@ class MyApp(QWidget):
             self.name_label.setText("Установите все модули и библиотеки. (Install requirements)")
 
     def closeEvent(self, event):
-        self.main_for = Entering()
-        self.main_for.show()
+        if self.flag:
+            from authorisation import User_inside
+            self.main_for = User_inside()
+            self.main_for.show()
+        else:
+            self.main_for = Entering()
+            self.main_for.show()
         event.accept()
 
     def basdan(self):
-        # что делать с базой данных хз, надо будет придумать.........
+        # что делать с базой данных нз, надо будет придумать.........
         # ВСЁ ПОЛУЧИЛОСЬ
         self.con = sqlite3.connect("data_base/base_3.db")
         self.cur = self.con.cursor()
@@ -576,6 +587,7 @@ class MyApp(QWidget):
 
         self.seas_info = self.cur.execute("""SELECT sea_resorts, information, coords, url_images
                                                             FROM seas""").fetchall()
+        self.con.commit()
 
 
 
@@ -583,8 +595,7 @@ class MyApp(QWidget):
         marker_claster = MarkerCluster().add_to(self.fg)
         for i in self.information:
             htm = f""" <img src="{i[5]}" alt="нет фото" height="200" width="260">
-            <h4>Горнолыжный курорт:
-            "{i[0]}"</h4>
+            <h4>{i[0]}</h4>
             <p>Общая длина: {i[3]} км </br>
             Количество трасс: {i[2]} </br>
             Перепад высот: {i[1]} м</p>"""
@@ -604,7 +615,7 @@ class MyApp(QWidget):
 
         for i in self.sanatories_info:
             htm = f""" <img src="{i[3]}" alt="нет фото" height="200" width="260">
-            <h4>"{i[0]}"</h4>
+            <h4>{i[0]}</h4>
             <p>{i[1]}</p> """
             iframe = folium.IFrame(html=htm, width=300, height=200)
             popup = folium.Popup(iframe, max_width=2650)
@@ -620,7 +631,7 @@ class MyApp(QWidget):
         marker_claster = MarkerCluster().add_to(self.museum)
         for j in self.museus_info:
             htm = f""" <img src="{j[3]}" alt="нет фото" height="200" width="260">
-                    <h4>"{j[0]}"</h4>
+                    <h4>{j[0]}</h4>
                     <p>{j[1]}</p> """
             iframe = folium.IFrame(html=htm, width=300, height=200)
             popup = folium.Popup(iframe, max_width=2650)
@@ -638,7 +649,7 @@ class MyApp(QWidget):
 
         for i in self.seas_info:
             htm = f""" <img src="{i[3]}" alt="нет фото" height="200" width="260">
-                    <h4>"{i[0]}"</h4>
+                    <h4>{i[0]}</h4>
                     <p>{i[1]}</p> """
             iframe = folium.IFrame(html=htm, width=300, height=200)
             popup = folium.Popup(iframe, max_width=2650)
@@ -649,6 +660,30 @@ class MyApp(QWidget):
                 icon=folium.DivIcon(html=f"""<div><svg><polygon points="20, 20, 30, 0, 10, 0" fill="#00e600"></svg>
                                                             </div>"""))
             marker.add_to(marker_claster)
+
+    def func_for_username(self, username):
+        self.flag = True
+        marker_claster = MarkerCluster().add_to(self.usernamers)
+
+        con = sqlite3.connect('data_base/users_data.db')
+        cur = con.cursor()
+        result = cur.execute(f'SELECT * FROM Files WHERE username = "{username}"').fetchall()
+        print(result)
+        con.commit()
+        for i in result:
+            htm = f"""<h4>{i[2]}</h4>
+                    <p>{i[5]}</p> """
+            iframe = folium.IFrame(html=htm, width=200, height=150)
+            popup = folium.Popup(iframe, max_width=2650)
+
+            marker = folium.Marker(
+                location=[float(i[3].split(',')[0]), float(i[3].split(',')[1])],
+                popup=popup,
+                tooltip=str(i[4]),
+                icon=folium.DivIcon(html=f"""<div><svg><polygon points="20, 20, 30, 0, 10, 0" fill="#ff0000"></svg>
+                                                            </div>"""))
+            marker.add_to(marker_claster)
+
 
 
 if __name__ == '__main__':

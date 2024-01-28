@@ -39,7 +39,7 @@ margin-top: 10 px;
 }</string>
       </property>
       <property name="text">
-       <string>Что представляет собой ваш багаж..</string>
+       <string>Какой отдых вы предпочитаете..</string>
       </property>
      </widget>
     </item>
