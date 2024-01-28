@@ -63,7 +63,7 @@ class QRegularPolygon(QGraphicsPolygonItem):
 class GraphicsView(QGraphicsView):
     def __init__(self):
         super().__init__()
-        self.resize(500, 500)
+        # self.resize(500, 500)
         self.scene = QGraphicsScene()
         self.setScene(self.scene)
 
@@ -150,7 +150,7 @@ class Entering(QWidget):
                                  "color: rgba(255, 255, 255, 255);\n"
                                  "}")
         self.label_test.setObjectName("label")
-        self.label_test.setText('Узнайте, какой отдых вам необходим, и определите направление для вашего отпуска.')
+        self.label_test.setText('Узнайте, какой отдых вам необходим и какое направление лучше выбрать.')
 
         self.pushButton_3 = QtWidgets.QPushButton()
         self.pushButton_3.setGeometry(QtCore.QRect(300, 200, 111, 28))
@@ -278,207 +278,207 @@ class Entering(QWidget):
 
 
 # класс проверка пароля, открытие других окон, если хотят зайти как админ
-class Admin_form(QWidget):
-    def __init__(self):
-        super().__init__()
-        uic.loadUi('forms/strongparol.ui', self)
-        self.pushButton.clicked.connect(self.result)
-        self.pushButton_2.clicked.connect(self.result)
-        self.pushButton_3.clicked.connect(self.result)
-        self.pushButton_4.clicked.connect(self.result)
-        self.lineEdit.setEchoMode(QLineEdit.Password)
-
-    def result(self):
-        try:
-            send = self.sender().text()
-            stroka = self.lineEdit.text()
-            print()
-            if send == "Назад":
-                self.addi = Entering()
-                self.addi.show()
-                self.close()
-            assert stroka == 'redactingDB'
-            if send == "Добавить элемент":
-                self.addi = Adding()
-                self.addi.show()
-            elif send == "Удалить элемент":
-                self.addi = Deleting()
-                self.addi.show()
-            elif send == "Изменить элемент":
-                self.addi = Changing()
-                self.addi.show()
-            elif send == "Назад":
-                self.addi = Entering()
-                self.addi.show()
-        except AssertionError:
-            self.label.setText('❌❌❌❌ Неверный пароль, попробуйте снова ❌❌❌❌')
-
-
-# класс, работающий для добавления новых элементов (горнолыжных курортов) в бд
-class Adding(QWidget):
-    def __init__(self):
-        super().__init__()
-        uic.loadUi('forms/add_element.ui', self)
-        self.numbbtn.clicked.connect(self.knowledge)
-        self.addbtn.clicked.connect(self.add_process)
-        self.con = sqlite3.connect("data_base/base.db")
-        self.cur = self.con.cursor()
-        self.num_el = self.cur.execute("""SELECT MAX(id) FROM ski""").fetchone()[0]
-        self.elements_number.setText(f"Последний элемент в списке (id): {str(self.num_el)}")
-
-    def knowledge(self):
-        try:
-            subj = self.line_numb.text()
-            if not subj[0].isupper():
-                subj = subj.capitalize()
-            count = self.cur.execute("SELECT count(*) FROM subjects WHERE subject=?", (subj,)).fetchone()[0]
-            assert count == 1
-            idi = self.cur.execute("SELECT id FROM subjects WHERE subject=?", (subj,)).fetchall()
-            self.nomer.setText(f"{str(idi[0])[1:-2]}")
-        except AssertionError:
-            self.nomer.setText('Ошибка. Попробуйте заново ввести название субъекта.')
-
-    def add_process(self):
-        try:
-            elements_to_add = self.line_ad.text().split('; ')
-            assert len(elements_to_add) == 7
-            assert elements_to_add[0].isdigit()
-            assert elements_to_add[1].isdigit()
-            assert elements_to_add[3].isdigit()
-            assert elements_to_add[4].isdigit()
-            assert elements_to_add[5].isdigit()
-            assert int(elements_to_add[0]) > int(self.num_el)
-            assert int(elements_to_add[1]) <= 56
-            coords = elements_to_add[6].split(', ')
-            assert len(coords) == 2
-            assert -90 <= int(float(coords[0])) <= 90 and -180 <= float(coords[1]) <= 180
-            que = "INSERT INTO ski(id, subject, ski_resort, total_length, number_trass, height_diff, coords) VALUES("
-            que += ", ".join([f"'{element}'" for element in elements_to_add])
-            que += ')'
-            self.cur.execute(que)
-            self.con.commit()
-            self.resbtn.setText('Запрос успешно выполнен')
-            self.num_el = self.cur.execute("""SELECT MAX(id) FROM ski""").fetchone()[0]
-            self.elements_number.setText(f"Последний элемент в списке (id): {str(self.num_el)}")
-        except AssertionError:
-            self.resbtn.setText('Что-то пошло не так')
-        except ValueError:
-            self.resbtn.setText('Что-то пошло не так')
-
-
-# класс, работающий для удаления элементов (горнолыжных курортов) в бд
-class Deleting(QWidget):
-    def __init__(self):
-        super().__init__()
-        uic.loadUi('forms/deleting_element.ui', self)
-        self.name_del.clicked.connect(self.deleting_name)
-        self.coord_del.clicked.connect(self.deleting_coord)
-        self.con = sqlite3.connect("data_base/base.db")
-        self.cur = self.con.cursor()
-
-    def deleting_name(self):
-        try:
-            nam = self.name_line.text()
-            exist_name = self.cur.execute("SELECT EXISTS(SELECT ski_resort FROM ski WHERE ski_resort = ?)",
-                                          (nam,)).fetchone()[0]
-            assert exist_name == 1
-            self.cur.execute("DELETE from ski WHERE ski_resort = ?", (nam,))
-            self.con.commit()
-            self.resbtn.setText('Запрос успешно выполнен')
-        except AssertionError:
-            self.resbtn.setText('Что-то пошло не так')
-
-    def deleting_coord(self):
-        try:
-            coo = self.coords_line.text()
-            exist_cord = self.cur.execute("SELECT EXISTS(SELECT coords FROM ski WHERE coords = ?)",
-                                          (coo,)).fetchone()[0]
-            assert exist_cord == 1
-            self.cur.execute("DELETE from ski WHERE coords = ?", (coo,))
-            self.con.commit()
-            self.resbtn2.setText('Запрос успешно выполнен')
-        except AssertionError:
-            self.resbtn2.setText('Что-то пошло не так')
-
-
-# класс, работающий для изменения элементов (горнолыжных курортов) в бд
-class Changing(QWidget):
-    def __init__(self):
-        super().__init__()
-        uic.loadUi('forms/changing_element2.ui', self)
-        self.btnchange.clicked.connect(self.chane_smth)
-        self.con = sqlite3.connect("data_base/base.db")
-        self.cur = self.con.cursor()
-        self.dict_changes = {'id': '', 'subject': '', 'ski_resort': '', 'total_length': '', 'number_trass': '',
-                             'height_diff': '', 'coords': ''}
-        self.list_changes = ['id', 'subject', 'ski_resort', 'total_length', 'number_trass', 'height_diff', 'coords']
-        self.search_id.clicked.connect(self.search)
-
-    def chane_smth(self):
-        try:
-            count = 0
-            difference = self.change_line.text().split('; ')
-            assert len(difference) == 7
-            assert difference[0] != '*'
-            print(f"Claer {self.dict_changes}")
-            for i in self.list_changes:
-                if difference[count] != '*':
-                    self.dict_changes[i] = difference[count]
-                    if count in [0, 1, 3, 4, 5]:
-                        assert difference[count].isdigit()
-                else:
-                    del self.dict_changes[i]
-                count += 1
-            if 'coords' in self.dict_changes:
-                print('here')
-                coords = self.dict_changes['coords'].split(', ')
-                assert len(coords) == 2
-                assert -90 <= float(coords[0]) <= 90 and -180 <= float(coords[1]) <= 180
-            idi = self.dict_changes['id']
-            del self.dict_changes['id']
-            assert self.dict_changes != {}
-            exist_id = self.cur.execute("SELECT EXISTS(SELECT ski_resort FROM ski WHERE id = ?)",
-                                          (idi,)).fetchone()[0]
-            assert exist_id == 1
-            que = "UPDATE ski SET "
-            que += ", ".join([f"{key}='{self.dict_changes.get(key)}'"
-                              for key in self.dict_changes.keys()])
-            que += " WHERE id = ?"
-            self.cur.execute(que, (idi, ))
-            self.con.commit()
-            self.resbtn.setText('Запрос успешно выполнен')
-            self.dict_changes = {'id': '', 'subject': '', 'ski_resort': '', 'total_length': '', 'number_trass': '',
-                                 'height_diff': '', 'coords': ''}
-        except AssertionError:
-            self.resbtn.setText('Что-то пошло не так')
-            self.dict_changes = {'id': '', 'subject': '', 'ski_resort': '', 'total_length': '', 'number_trass': '',
-                                 'height_diff': '', 'coords': ''}
-        except ValueError:
-            self.resbtn.setText('Что-то пошло не так')
-            self.dict_changes = {'id': '', 'subject': '', 'ski_resort': '', 'total_length': '', 'number_trass': '',
-                                 'height_diff': '', 'coords': ''}
-
-    def search(self):
-        try:
-            nam = self.name_line.text()
-            coo = self.coords_line.text()
-            assert nam != '' or coo != ''
-            if nam == '':
-                exist_cord = self.cur.execute("SELECT EXISTS(SELECT coords FROM ski WHERE coords = ?)",
-                                              (coo,)).fetchone()[0]
-                assert exist_cord == 1
-                idi_prtn = self.cur.execute("SELECT id FROM ski WHERE coords = ?", (coo, )).fetchone()[0]
-                self.con.commit()
-                self.num_id.setText(f"id элемента: {idi_prtn}")
-            elif coo == '':
-                exist_name = self.cur.execute("SELECT EXISTS(SELECT ski_resort FROM ski WHERE ski_resort = ?)",
-                                              (nam,)).fetchone()[0]
-                assert exist_name == 1
-                idi_prtn = self.cur.execute("SELECT id FROM ski WHERE ski_resort = ?", (nam,)).fetchone()[0]
-                self.con.commit()
-                self.num_id.setText(f"id элемента: {idi_prtn}")
-        except AssertionError:
-            self.num_id.setText('Что-то пошло не так')
+# class Admin_form(QWidget):
+#     def __init__(self):
+#         super().__init__()
+#         uic.loadUi('forms/strongparol.ui', self)
+#         self.pushButton.clicked.connect(self.result)
+#         self.pushButton_2.clicked.connect(self.result)
+#         self.pushButton_3.clicked.connect(self.result)
+#         self.pushButton_4.clicked.connect(self.result)
+#         self.lineEdit.setEchoMode(QLineEdit.Password)
+#
+#     def result(self):
+#         try:
+#             send = self.sender().text()
+#             stroka = self.lineEdit.text()
+#             print()
+#             if send == "Назад":
+#                 self.addi = Entering()
+#                 self.addi.show()
+#                 self.close()
+#             assert stroka == 'redactingDB'
+#             if send == "Добавить элемент":
+#                 self.addi = Adding()
+#                 self.addi.show()
+#             elif send == "Удалить элемент":
+#                 self.addi = Deleting()
+#                 self.addi.show()
+#             elif send == "Изменить элемент":
+#                 self.addi = Changing()
+#                 self.addi.show()
+#             elif send == "Назад":
+#                 self.addi = Entering()
+#                 self.addi.show()
+#         except AssertionError:
+#             self.label.setText('❌❌❌❌ Неверный пароль, попробуйте снова ❌❌❌❌')
+#
+#
+# # класс, работающий для добавления новых элементов (горнолыжных курортов) в бд
+# class Adding(QWidget):
+#     def __init__(self):
+#         super().__init__()
+#         uic.loadUi('forms/add_element.ui', self)
+#         self.numbbtn.clicked.connect(self.knowledge)
+#         self.addbtn.clicked.connect(self.add_process)
+#         self.con = sqlite3.connect("data_base/base.db")
+#         self.cur = self.con.cursor()
+#         self.num_el = self.cur.execute("""SELECT MAX(id) FROM ski""").fetchone()[0]
+#         self.elements_number.setText(f"Последний элемент в списке (id): {str(self.num_el)}")
+#
+#     def knowledge(self):
+#         try:
+#             subj = self.line_numb.text()
+#             if not subj[0].isupper():
+#                 subj = subj.capitalize()
+#             count = self.cur.execute("SELECT count(*) FROM subjects WHERE subject=?", (subj,)).fetchone()[0]
+#             assert count == 1
+#             idi = self.cur.execute("SELECT id FROM subjects WHERE subject=?", (subj,)).fetchall()
+#             self.nomer.setText(f"{str(idi[0])[1:-2]}")
+#         except AssertionError:
+#             self.nomer.setText('Ошибка. Попробуйте заново ввести название субъекта.')
+#
+#     def add_process(self):
+#         try:
+#             elements_to_add = self.line_ad.text().split('; ')
+#             assert len(elements_to_add) == 7
+#             assert elements_to_add[0].isdigit()
+#             assert elements_to_add[1].isdigit()
+#             assert elements_to_add[3].isdigit()
+#             assert elements_to_add[4].isdigit()
+#             assert elements_to_add[5].isdigit()
+#             assert int(elements_to_add[0]) > int(self.num_el)
+#             assert int(elements_to_add[1]) <= 56
+#             coords = elements_to_add[6].split(', ')
+#             assert len(coords) == 2
+#             assert -90 <= int(float(coords[0])) <= 90 and -180 <= float(coords[1]) <= 180
+#             que = "INSERT INTO ski(id, subject, ski_resort, total_length, number_trass, height_diff, coords) VALUES("
+#             que += ", ".join([f"'{element}'" for element in elements_to_add])
+#             que += ')'
+#             self.cur.execute(que)
+#             self.con.commit()
+#             self.resbtn.setText('Запрос успешно выполнен')
+#             self.num_el = self.cur.execute("""SELECT MAX(id) FROM ski""").fetchone()[0]
+#             self.elements_number.setText(f"Последний элемент в списке (id): {str(self.num_el)}")
+#         except AssertionError:
+#             self.resbtn.setText('Что-то пошло не так')
+#         except ValueError:
+#             self.resbtn.setText('Что-то пошло не так')
+#
+#
+# # класс, работающий для удаления элементов (горнолыжных курортов) в бд
+# class Deleting(QWidget):
+#     def __init__(self):
+#         super().__init__()
+#         uic.loadUi('forms/deleting_element.ui', self)
+#         self.name_del.clicked.connect(self.deleting_name)
+#         self.coord_del.clicked.connect(self.deleting_coord)
+#         self.con = sqlite3.connect("data_base/base.db")
+#         self.cur = self.con.cursor()
+#
+#     def deleting_name(self):
+#         try:
+#             nam = self.name_line.text()
+#             exist_name = self.cur.execute("SELECT EXISTS(SELECT ski_resort FROM ski WHERE ski_resort = ?)",
+#                                           (nam,)).fetchone()[0]
+#             assert exist_name == 1
+#             self.cur.execute("DELETE from ski WHERE ski_resort = ?", (nam,))
+#             self.con.commit()
+#             self.resbtn.setText('Запрос успешно выполнен')
+#         except AssertionError:
+#             self.resbtn.setText('Что-то пошло не так')
+#
+#     def deleting_coord(self):
+#         try:
+#             coo = self.coords_line.text()
+#             exist_cord = self.cur.execute("SELECT EXISTS(SELECT coords FROM ski WHERE coords = ?)",
+#                                           (coo,)).fetchone()[0]
+#             assert exist_cord == 1
+#             self.cur.execute("DELETE from ski WHERE coords = ?", (coo,))
+#             self.con.commit()
+#             self.resbtn2.setText('Запрос успешно выполнен')
+#         except AssertionError:
+#             self.resbtn2.setText('Что-то пошло не так')
+#
+#
+# # класс, работающий для изменения элементов (горнолыжных курортов) в бд
+# class Changing(QWidget):
+#     def __init__(self):
+#         super().__init__()
+#         uic.loadUi('forms/changing_element2.ui', self)
+#         self.btnchange.clicked.connect(self.chane_smth)
+#         self.con = sqlite3.connect("data_base/base.db")
+#         self.cur = self.con.cursor()
+#         self.dict_changes = {'id': '', 'subject': '', 'ski_resort': '', 'total_length': '', 'number_trass': '',
+#                              'height_diff': '', 'coords': ''}
+#         self.list_changes = ['id', 'subject', 'ski_resort', 'total_length', 'number_trass', 'height_diff', 'coords']
+#         self.search_id.clicked.connect(self.search)
+#
+#     def chane_smth(self):
+#         try:
+#             count = 0
+#             difference = self.change_line.text().split('; ')
+#             assert len(difference) == 7
+#             assert difference[0] != '*'
+#             print(f"Claer {self.dict_changes}")
+#             for i in self.list_changes:
+#                 if difference[count] != '*':
+#                     self.dict_changes[i] = difference[count]
+#                     if count in [0, 1, 3, 4, 5]:
+#                         assert difference[count].isdigit()
+#                 else:
+#                     del self.dict_changes[i]
+#                 count += 1
+#             if 'coords' in self.dict_changes:
+#                 print('here')
+#                 coords = self.dict_changes['coords'].split(', ')
+#                 assert len(coords) == 2
+#                 assert -90 <= float(coords[0]) <= 90 and -180 <= float(coords[1]) <= 180
+#             idi = self.dict_changes['id']
+#             del self.dict_changes['id']
+#             assert self.dict_changes != {}
+#             exist_id = self.cur.execute("SELECT EXISTS(SELECT ski_resort FROM ski WHERE id = ?)",
+#                                           (idi,)).fetchone()[0]
+#             assert exist_id == 1
+#             que = "UPDATE ski SET "
+#             que += ", ".join([f"{key}='{self.dict_changes.get(key)}'"
+#                               for key in self.dict_changes.keys()])
+#             que += " WHERE id = ?"
+#             self.cur.execute(que, (idi, ))
+#             self.con.commit()
+#             self.resbtn.setText('Запрос успешно выполнен')
+#             self.dict_changes = {'id': '', 'subject': '', 'ski_resort': '', 'total_length': '', 'number_trass': '',
+#                                  'height_diff': '', 'coords': ''}
+#         except AssertionError:
+#             self.resbtn.setText('Что-то пошло не так')
+#             self.dict_changes = {'id': '', 'subject': '', 'ski_resort': '', 'total_length': '', 'number_trass': '',
+#                                  'height_diff': '', 'coords': ''}
+#         except ValueError:
+#             self.resbtn.setText('Что-то пошло не так')
+#             self.dict_changes = {'id': '', 'subject': '', 'ski_resort': '', 'total_length': '', 'number_trass': '',
+#                                  'height_diff': '', 'coords': ''}
+#
+#     def search(self):
+#         try:
+#             nam = self.name_line.text()
+#             coo = self.coords_line.text()
+#             assert nam != '' or coo != ''
+#             if nam == '':
+#                 exist_cord = self.cur.execute("SELECT EXISTS(SELECT coords FROM ski WHERE coords = ?)",
+#                                               (coo,)).fetchone()[0]
+#                 assert exist_cord == 1
+#                 idi_prtn = self.cur.execute("SELECT id FROM ski WHERE coords = ?", (coo, )).fetchone()[0]
+#                 self.con.commit()
+#                 self.num_id.setText(f"id элемента: {idi_prtn}")
+#             elif coo == '':
+#                 exist_name = self.cur.execute("SELECT EXISTS(SELECT ski_resort FROM ski WHERE ski_resort = ?)",
+#                                               (nam,)).fetchone()[0]
+#                 assert exist_name == 1
+#                 idi_prtn = self.cur.execute("SELECT id FROM ski WHERE ski_resort = ?", (nam,)).fetchone()[0]
+#                 self.con.commit()
+#                 self.num_id.setText(f"id элемента: {idi_prtn}")
+#         except AssertionError:
+#             self.num_id.setText('Что-то пошло не так')
 
 
 # класс для поиска курорта по вводу пользователя
