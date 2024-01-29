@@ -18,6 +18,7 @@ from PyQt5.QtWebEngineWidgets import QWebEngineView
 username = ''
 user_id = 0
 name_for_redacting = ''
+name_for_redacting2 = ''
 previous_username = ''
 counter = 0
 counter_2 = 0
@@ -208,6 +209,8 @@ class Add_file(QWidget):
 
     def adding(self):
         global counter_2
+        global name_for_redacting2
+        # так себе идея с таким огромным количеством глобальных переменных..
         print(counter_2)
         valid = QMessageBox()
         valid.setStyleSheet("QMessageBox {background-color: rgba(48, 57, 77, 200); font-size: 13pt;}"
@@ -215,8 +218,10 @@ class Add_file(QWidget):
                             "QPushButton{background-color: rgba(191, 112, 151, 200); color: white;}")
         valid.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         print('here')
-
+        if name_for_redacting2 != self.plainTextEdit_2.toPlainText():
+            counter_2 = 0
         name_place = self.plainTextEdit_2.toPlainText()
+        name_for_redacting2 = name_place
         print(name_place)
         name_travel = self.name_travel.text()
         note_message = self.plainTextEdit.toPlainText()
