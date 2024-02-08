@@ -410,4 +410,3 @@ class Redact_file(QWidget):
                     self.plainTextEdit.setPlainText('')
         except Exception:
             print('ошибкааааааааааа')
-

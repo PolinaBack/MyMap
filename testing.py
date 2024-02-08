@@ -556,7 +556,7 @@ class Museum_form(QWidget):
                            '<p align="center"> отсюда любовь к активным или даже экстремальным видам туризма. </p>'
                            '<p align="center">Походы, сплавы и восхождения - вы полны энергии, не боитесь непредвиденных</p>'
                            '<p align="center"> ситуаций и готовы отправиться хоть на край света за новыми ощущениями.</p>'
-                           '<p>Подходящие города-курорты: Белокуриха, Манжерок, Сочи, Домбай, Архыз, Мончегорск</p></body></html>')
+                           '<p align="center">Подходящие города-курорты: Белокуриха, Манжерок, Архыз, Домбай</p></body></html>')
         elif SLOVAR_RESULT_TEST['forms/sanatory'] == max(slovar_value):
             self.setWindowTitle('Санаторий')
             self.label.setText('<html><head/><body><p align="center"> Согласно результатам теста, в данный момент вы физически истощены. </p>'
@@ -606,6 +606,7 @@ class Museum_form(QWidget):
         event.accept()
 
     def open_map_form(self):
+        global SLOVAR_RESULT_TEST
         from main import MyApp
         slovar_value = sorted(SLOVAR_RESULT_TEST.values())
         if SLOVAR_RESULT_TEST['forms/sea'] == max(slovar_value):
@@ -616,5 +617,6 @@ class Museum_form(QWidget):
             self.second_form = MyApp(show_mountains=True)
         elif SLOVAR_RESULT_TEST['forms/sanatory'] == max(slovar_value):
             self.second_form = MyApp(show_sanatories=True)
+        SLOVAR_RESULT_TEST = {'forms/sanatory': 0, 'forms/sea': 0, 'forms/museum': 0, 'forms/mountains': 0}
         self.second_form.show()
         self.close()
