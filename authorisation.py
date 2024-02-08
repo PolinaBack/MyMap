@@ -1,17 +1,8 @@
-import time
-from PyQt5 import uic, QtCore, QtGui
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, qApp
-import sys
-import math
-import random
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import uic
+from PyQt5 import QtCore
 from PyQt5.Qt import *
 import sqlite3
 from geopy.geocoders import Nominatim
-import io
-import folium
-from folium.plugins import Geocoder
-from PyQt5.QtWebEngineWidgets import QWebEngineView
 
 # удаление заметки
 
@@ -111,14 +102,14 @@ class Another_autharisation(QWidget):
 
 
     def closeEvent(self, event):
-        from all_work2_222 import Entering
+        from main import Entering
         if self.sender() == None:
             self.main_for = Entering()
             self.main_for.show()
         event.accept()
 
     def open_main_form(self):
-        from all_work2_222 import Entering
+        from main import Entering
         self.second_form = Entering()
         self.second_form.show()
         self.close()
@@ -134,18 +125,11 @@ class User_inside(QWidget):
         super().__init__()
         uic.loadUi('forms/user_profil.ui', self)
         self.setWindowTitle('Личный кабинет')
-        # print('here')
         self.add_button.clicked.connect(self.add_new_group)
         self.redact_last_button.clicked.connect(self.redact_last)
-        # print('here')
         self.pushButton_3.clicked.connect(self.open_main_form)
         self.label.setText(f'Приветствуем, {username}!')
         self.tomap.clicked.connect(self.open_map)
-        # print('here')
-        # for i in range(1, 10000):
-        #     self.travels_label.setText(str(i))
-        #     time.sleep(0.02)
-        # print('here')
         con = sqlite3.connect('data_base/users_data.db')
         cur = con.cursor()
         travels = cur.execute(f"""SELECT group_name FROM Files WHERE username = '{username}'""").fetchall()
@@ -155,16 +139,10 @@ class User_inside(QWidget):
         con.commit()
         con.close()
         self.travels_label.setText(str(len(set(travels))))
-
-        # print('here')
-        # for j in range(1, 10000):
-        #     self.place_label.setText(str(j))
-            # time.sleep(0.02)
         self.place_label.setText(str(len(set(place))))
-        # print('here')
 
     def open_map(self):
-        from all_work2_222 import MyApp
+        from main import MyApp
         self.second_form = MyApp(username=username)
         self.second_form.show()
         self.close()
@@ -183,14 +161,14 @@ class User_inside(QWidget):
 
 
     def closeEvent(self, event):
-        from all_work2_222 import Entering
+        from main import Entering
         if self.sender() == None:
             self.main_for = Entering()
             self.main_for.show()
         event.accept()
 
     def open_main_form(self):
-        from all_work2_222 import Entering
+        from main import Entering
         self.second_form = Entering()
         self.second_form.show()
         self.close()
@@ -267,7 +245,7 @@ class Add_file(QWidget):
             con.close()
 
     def closeEvent(self, event):
-        from all_work2_222 import Entering
+        from main import Entering
         if self.sender() == None:
             self.main_for = Entering()
             self.main_for.show()
@@ -381,7 +359,7 @@ class Redact_file(QWidget):
 
 
     def closeEvent(self, event):
-        from all_work2_222 import Entering
+        from main import Entering
         if self.sender() == None:
             self.main_for = Entering()
             self.main_for.show()
@@ -433,14 +411,3 @@ class Redact_file(QWidget):
         except Exception:
             print('ошибкааааааааааа')
 
-
-
-
-
-
-
-# if __name__ == '__main__':
-#     app = QApplication(sys.argv)
-#     ex = Redact_file()
-#     ex.show()
-#     sys.exit(app.exec())

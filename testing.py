@@ -1,12 +1,8 @@
 import time
-from PyQt5 import uic, QtCore, QtGui
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget
-import sys
+from PyQt5 import uic
 import math
-import random
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtWidgets
 from PyQt5.Qt import *
-# from all_work2_222 import Entering
 
 # словарь для подсчета и вывода результатов тестирования
 SLOVAR_RESULT_TEST = {'forms/sanatory': 0, 'forms/sea': 0, 'forms/museum': 0, 'forms/mountains': 0}
@@ -37,17 +33,6 @@ class QRegularPolygon(QGraphicsPolygonItem):
         self.setPolygon(QPolygonF(points))
 
         self.tx, self.ty = 200, 200
-
-    # def doRotate(self, alfa):
-    #     tr = QTransform()
-    #     tr.translate(self.tx, self.ty)
-    #     tr.rotate(alfa)
-    #     tr.translate(-self.tx, -self.ty)
-    #     self.r, self.g, self.b = random.randint(0, 255), \
-    #         random.randint(0, 255), \
-    #         random.randint(0, 255)
-    #     self.setBrush(QColor(self.r, self.g, self.b))
-    #     self.setTransform(tr)
 
 
 class GraphicsView(QGraphicsView):
@@ -85,14 +70,14 @@ class Test1_form(QWidget):
         self.pushButton_2.clicked.connect(self.open_main_form)
 
     def closeEvent(self, event):
-        from all_work2_222 import Entering
+        from main import Entering
         if self.sender() == None:
             self.main_for = Entering()
             self.main_for.show()
         event.accept()
 
     def open_main_form(self):
-        from all_work2_222 import Entering
+        from main import Entering
         self.second_form = Entering()
         self.second_form.show()
         self.close()
@@ -140,7 +125,7 @@ class Test2_form(QWidget):
         self.pushButton.clicked.connect(self.open_test3_form)
 
     def closeEvent(self, event):
-        from all_work2_222 import Entering
+        from main import Entering
         if self.sender() == None:
             self.main_for = Entering()
             self.main_for.show()
@@ -179,7 +164,7 @@ class Test3_form(QWidget):
         self.pushButton.clicked.connect(self.open_test4_form)
 
     def closeEvent(self, event):
-        from all_work2_222 import Entering
+        from main import Entering
         if self.sender() == None:
             self.main_for = Entering()
             self.main_for.show()
@@ -217,7 +202,7 @@ class Test4_form(QWidget):
         self.pushButton.clicked.connect(self.open_test5_form)
 
     def closeEvent(self, event):
-        from all_work2_222 import Entering
+        from main import Entering
         if self.sender() == None:
             self.main_for = Entering()
             self.main_for.show()
@@ -259,7 +244,7 @@ class Test5_form(QWidget):
         self.pushButton.clicked.connect(self.open_test6_form)
 
     def closeEvent(self, event):
-        from all_work2_222 import Entering
+        from main import Entering
         if self.sender() == None:
             self.main_for = Entering()
             self.main_for.show()
@@ -296,7 +281,7 @@ class Test6_form(QWidget):
         self.pushButton.clicked.connect(self.open_test7_form)
 
     def closeEvent(self, event):
-        from all_work2_222 import Entering
+        from main import Entering
         if self.sender() == None:
             self.main_for = Entering()
             self.main_for.show()
@@ -339,7 +324,7 @@ class Test7_form(QWidget):
         self.pushButton.clicked.connect(self.open_test8_form)
 
     def closeEvent(self, event):
-        from all_work2_222 import Entering
+        from main import Entering
         if self.sender() == None:
             self.main_for = Entering()
             self.main_for.show()
@@ -383,7 +368,7 @@ class Test8_form(QWidget):
         self.pushButton.clicked.connect(self.open_test9_form)
 
     def closeEvent(self, event):
-        from all_work2_222 import Entering
+        from main import Entering
         if self.sender() == None:
             self.main_for = Entering()
             self.main_for.show()
@@ -427,7 +412,7 @@ class Test9_form(QWidget):
         self.pushButton.clicked.connect(self.open_test10_form)
 
     def closeEvent(self, event):
-        from all_work2_222 import Entering
+        from main import Entering
         if self.sender() == None:
             self.main_for = Entering()
             self.main_for.show()
@@ -469,7 +454,7 @@ class Test10_form(QWidget):
         self.pushButton.clicked.connect(self.open_prog_form)
 
     def closeEvent(self, event):
-        from all_work2_222 import Entering
+        from main import Entering
         if self.sender() == None:
             self.main_for = Entering()
             self.main_for.show()
@@ -538,19 +523,6 @@ class Interface(QWidget):
         self.second_form.show()
         self.close()
 
-# class Sea_form(QWidget):
-#     def __init__(self):
-#         super().__init__()
-#         uic.loadUi('forms/sea.ui', self)
-#         self.setWindowTitle('Однозначно море')
-#         self.pushButton.clicked.connect(self.open_main_form)
-#
-#     def open_main_form(self):
-#         print('here!')
-#         from all_work2_222 import Entering
-#         self.second_form = Entering()
-#         self.second_form.show()
-#         self.close()
 
 class Museum_form(QWidget):
     def __init__(self):
@@ -569,38 +541,38 @@ class Museum_form(QWidget):
         slovar_value = sorted(SLOVAR_RESULT_TEST.values())
         if SLOVAR_RESULT_TEST['forms/sea'] == max(slovar_value):
             self.setWindowTitle('Море, однозначно море')
-            self.label.setText('<html><head/><body><p align="center"> Вы ратуете за комфорт и размеренный отдых, не перегруженный как большим количеством </p>'
-                               '<p align="center">новой информации, так и активными перемещениями. В окружении леса или</p>'
-                               '<p align="center"> на тихом морском побережье — там, где вы собираетесь провести отпуск, все должно настраивать </p>'
-                               '<p align="center">на умиротворение и способствовать накоплению новых жизненных сил.</p>'
-                           '<p>Подходящие города-курорты: Сочи, Анапа, Светлогорск, Судак, Ялта</p></body></html>')
+            self.label.setText('<html><head/><body><p align="center"> Вы ратуете за комфорт и размеренный отдых, </p>'
+                               '<p align="center"> не перегруженный как большим количеством новой информации,</p>'
+                               '<p align="center"> так и активными перемещениями. В окружении леса или</p>'
+                               '<p align="center"> на тихом морском побережье — там, где вы собираетесь </p>'
+                               '<p align="center">провести отпуск, все должно настраивать на умиротворение</p>'
+                               '<p align="center"> и способствовать накоплению новых жизненных сил.</p>'
+                           '<p align="center">Подходящие города-курорты: Сочи, Анапа, Светлогорск, Судак, Ялта</p></body></html>')
         elif SLOVAR_RESULT_TEST['forms/mountains'] == max(slovar_value):
             self.setWindowTitle('Горы')
-            self.label.setText('<html><head/><body><p align="center"> Считается, что лучший отдых - '
-                           'это смена деятельности, и для вас это актуально вдвойне</p>'
-                           '<p align="center">ведь &quot;деятельность&quot; и &quot;движение&quot; - это ваши '
-                           'ключевые слова, отсюда любовь к </p><p align="center">активным или '
-                           'даже экстремальным видам туризма. Походы, сплавы и восхождения</p>'
-                           '<p align="center">- вы полны энергии, не боитесь непредвиденных '
-                           'ситуаций и готовы отправиться</p><p align="center">хоть на край'
-                           'света за новыми ощущениями.</p>'
+            self.label.setText('<html><head/><body><p align="center"> Считается, что лучший отдых - это смена деятельности, '
+                               '<p align="center">и для вас это актуально вдвойне ведь </p>'
+                           '<p align="center">&quot;деятельность&quot; и &quot;движение&quot; - это ваши ключевые слова,'
+                           '<p align="center"> отсюда любовь к активным или даже экстремальным видам туризма. </p>'
+                           '<p align="center">Походы, сплавы и восхождения - вы полны энергии, не боитесь непредвиденных</p>'
+                           '<p align="center"> ситуаций и готовы отправиться хоть на край света за новыми ощущениями.</p>'
                            '<p>Подходящие города-курорты: Белокуриха, Манжерок, Сочи, Домбай, Архыз, Мончегорск</p></body></html>')
         elif SLOVAR_RESULT_TEST['forms/sanatory'] == max(slovar_value):
             self.setWindowTitle('Санаторий')
-            self.label.setText('<html><head/><body><p align="center"> Согласно результатам теста, в данный момент вы физически истощены. '
-                               '</p> <p align="center">Вашему организму нужно восстановиться и прийти в норму. '
-                               'И большое количество сна </p>'
-                               '<p align="center">не спасет данную ситуацию. Для лучшего эффекта необходимо добавить массаж, '
-                               'йогу, </p> <p align="center">спа-процедуры, расслабляющие ванны, растяжку – все то, что поможет телу расслабиться.<p>'
-                               '<p>Подходящие города-курорты: Старая Русса, Пятигорск, Саки, Белокуриха</p></body></html>')
+            self.label.setText('<html><head/><body><p align="center"> Согласно результатам теста, в данный момент вы физически истощены. </p>'
+                               '<p align="center">Вашему организму нужно восстановиться и прийти в норму. </p>'
+                               '<p align="center">И большое количество сна не спасет данную ситуацию. </p>'
+                               '<p align="center">Для лучшего эффекта необходимо добавить массаж, йогу, спа-процедуры, </p>'
+                               '<p align="center">расслабляющие ванны, растяжку – все то, что поможет телу расслабиться.<p>'
+                               '<p align="center">Подходящие города-курорты: Старая Русса, Пятигорск, Саки, Белокуриха</p></body></html>')
 
         elif SLOVAR_RESULT_TEST['forms/museum'] == max(slovar_value):
             self.setWindowTitle('Культура')
-            self.label.setText('<html><head/><body><p align="center"> Залог хорошего отдыха для вас — переместиться в незнакомую обстановку. <p>'
+            self.label.setText('<html><head/><body><p align="center">Залог хорошего отдыха для вас — переместиться в незнакомую обстановку. <p>'
                                '<p align="center">Вы открыты и общительны и находите удовольствие в знакомстве </p>'
-                               '<p align="center">с новой культурой, ее традициями. Музеи, памятники архитектуры, набережные </p>'
-                               '<p align="center">и т. д. — даже не важно, сможете ли вы обойти все интересные места незнакомого города,</p>'
-                               '<p align="center"> главное — идти навстречу новым впечатлениям!</p>'
+                               '<p align="center">с новой культурой, ее традициями. Музеи, памятники архитектуры, </p>'
+                               '<p align="center">набережные и т. д. — даже не важно, сможете ли вы обойти все интересные</p>'
+                               '<p align="center"> места незнакомого города, главное — идти навстречу новым впечатлениям!</p>'
                                '<p>Подходящие города-курорты: Томск, Владивосток, Тула</p></body></html>')
 
         self.pushButton = QtWidgets.QPushButton()
@@ -627,18 +599,14 @@ class Museum_form(QWidget):
         self.pushButton.clicked.connect(self.open_map_form)
 
     def closeEvent(self, event):
-        from all_work2_222 import Entering
+        from main import Entering
         if not self.pushButton.isChecked():
             self.main_for = Entering()
             self.main_for.show()
         event.accept()
 
-
-    # def changeValue(self):
-    #     self.view.hexagon.doRotate(self.sld.value())
-
     def open_map_form(self):
-        from all_work2_222 import MyApp
+        from main import MyApp
         slovar_value = sorted(SLOVAR_RESULT_TEST.values())
         if SLOVAR_RESULT_TEST['forms/sea'] == max(slovar_value):
             self.second_form = MyApp(show_seas=True)
@@ -650,78 +618,3 @@ class Museum_form(QWidget):
             self.second_form = MyApp(show_sanatories=True)
         self.second_form.show()
         self.close()
-
-# class Mountains_form(QWidget):
-#     def __init__(self):
-#         super().__init__()
-#         uic.loadUi('forms/mainform2.ui', self)
-#         self.setWindowTitle('Горы и свежий воздух')
-#
-#         self.label = QtWidgets.QLabel()
-#         self.label.setStyleSheet("QLabel {\n"
-#                                  "font-family: \'Arial\' \'Optima\';\n"
-#                                  "font: bold;\n"
-#                                  "font-size: 13pt;\n"
-#                                  "color: rgba(255, 255, 255, 255);\n"
-#                                  "}")
-#         self.label.setObjectName("label")
-#         self.label.setText('<html><head/><body><p align="center"> Считается, что лучший отдых - '
-#                            'это смена деятельности, и для вас это актуально вдвойне</p>'
-#                            '<p align="center">ведь &quot;деятельность&quot; и &quot;движение&quot; - это ваши '
-#                            'ключевые слова, отсюда любовь к </p><p align="center">активным или '
-#                            'даже экстремальным видам туризма. Походы, сплавы и восхождения</p>'
-#                            '<p align="center">- вы полны энергии, не боитесь непредвиденных '
-#                            'ситуаций и готовы отправиться</p><p align="center">хоть на край'
-#                            'света за новыми ощущениями.</p>'
-#                            '<p>Подходящие города-курорты: Белокуриха, Манжерок, Сочи, Домбай, Архыз, Мончегорск</p></body></html>')
-#
-#         self.pushButton = QtWidgets.QPushButton()
-#         self.pushButton.setGeometry(QtCore.QRect(300, 200, 111, 28))
-#         self.pushButton.setCheckable(True)
-#         self.pushButton.setText('На главное меню')
-#         self.pushButton.setStyleSheet("QPushButton {\nbackground-color: rgba(127, 143, 24, 100);\nborder-radius: 5px;"
-#                                       "\npadding: 10px;\nfont-size: 12pt;\ncolor: rgba(255, 255, 255, 200);"
-#                                       "\nmargin-left: 100px;\nmargin-right: 100px;\n}"
-#                                       "\nQPushButton:hover {\nbackground-color: rgba(127, 143, 24, 200);\n}")
-#         self.pushButton.setObjectName("pushButton")
-#
-#         self.view = GraphicsView()
-#         # self.sld = QSlider(Qt.Horizontal, self)
-#         # self.sld.setRange(-180, 180)
-#         # self.sld.valueChanged.connect(self.changeValue)
-#
-#         vbox = QVBoxLayout(self)
-#         vbox.addWidget(self.label)
-#         vbox.addWidget(self.view)
-#         # vbox.addWidget(self.sld)
-#         vbox.addWidget(self.pushButton)
-#
-#         self.pushButton.clicked.connect(self.open_main_form)
-#
-#     # def changeValue(self):
-#     #     self.view.hexagon.doRotate(self.sld.value())
-#
-#     def open_main_form(self):
-#         from all_work2_222 import Entering
-#         self.second_form = Entering()
-#         self.second_form.show()
-#         self.close()
-# # class Sanatory_form(QWidget):
-#     def __init__(self):
-#         super().__init__()
-#         uic.loadUi('forms/sanatory.ui', self)
-#         self.setWindowTitle('Санаторий')
-#         self.pushButton.clicked.connect(self.open_main_form)
-#
-#     def open_main_form(self):
-#         from all_work2_222 import Entering
-#         self.second_form = Entering()
-#         self.second_form.show()
-#         self.close()
-
-
-# if __name__ == '__main__':
-#     app = QApplication(sys.argv)
-#     ex = Mountains_form()
-#     ex.show()
-#     sys.exit(app.exec())
