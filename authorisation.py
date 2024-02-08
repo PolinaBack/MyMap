@@ -3,9 +3,9 @@ from PyQt5 import QtCore
 from PyQt5.Qt import *
 import sqlite3
 from geopy.geocoders import Nominatim
+# подключение используемых библиотек
 
-# удаление заметки
-
+# глобальные переменные для работы создания и изменения заметок
 username = ''
 user_id = 0
 name_for_redacting = ''
@@ -14,9 +14,7 @@ previous_username = ''
 counter = 0
 counter_2 = 0
 
-
-# сделать ли поле интересный факт при авторизации, лэйбл авторизации убрать и оставить слово авторизация только в заголовке окна
-
+# класс авторизации пользователя
 class Another_autharisation(QWidget):
     def __init__(self):
         super().__init__()
@@ -28,6 +26,7 @@ class Another_autharisation(QWidget):
         self.pushButton_3.clicked.connect(self.open_main_form)
         qApp.setStyleSheet("QMessageBox QPushButton{background-color: white;}")
 
+    # функция для входа в свой аккаунт
     def login(self):
         global username
         global user_id
@@ -35,6 +34,7 @@ class Another_autharisation(QWidget):
         cur = con.cursor()
         username = self.login_edit.text()
         password = self.pass_edit.text()
+        # создание параметров для вывода вспомогательного окна-сообщения
         valid = QMessageBox()
         valid.setStyleSheet("QMessageBox {background-color: rgba(48, 57, 77, 200); font-size: 13pt;}"
                             "QLabel {font-family: 'Arial' 'Optima'; font-size: 13pt; color: white;} "
@@ -42,7 +42,7 @@ class Another_autharisation(QWidget):
         valid.setWindowFlag(QtCore.Qt.FramelessWindowHint)
 
         result = cur.execute(f'SELECT * FROM Users WHERE username = "{username}"').fetchall()
-
+        # проверка на ошибки
         if result != [] and result[0][2] == password:
             user_id = cur.execute(f'SELECT * FROM Users WHERE username = "{username}"').fetchall()[0][0]
             print('here')
@@ -57,7 +57,7 @@ class Another_autharisation(QWidget):
         cur.close()
         con.close()
 
-
+    # функция регистрации
     def signUp(self):
         global username
         global user_id
@@ -65,6 +65,7 @@ class Another_autharisation(QWidget):
         cur = con.cursor()
         username = self.login_edit.text()
         password = self.pass_edit.text()
+        # создание параметров для вывода вспомогательного окна-сообщения
         valid = QMessageBox()
         valid.setStyleSheet("QMessageBox {background-color: rgba(48, 57, 77, 200); font-size: 13pt;}"
                             "QLabel {font-family: 'Arial' 'Optima'; font-size: 13pt; color: white;} "
@@ -72,7 +73,7 @@ class Another_autharisation(QWidget):
         valid.setWindowFlag(QtCore.Qt.FramelessWindowHint)
 
         result = cur.execute(f'SELECT * FROM Users WHERE username = "{username}"').fetchall()
-
+        # проверка на ошибки
         if username == '' and password == '':
             valid.setText('Ошибка! Вы не ввели данные!')
             valid.exec()
@@ -90,9 +91,8 @@ class Another_autharisation(QWidget):
             valid.exec()
 
         elif not result and username != '' and password != '':
-            print('here')
+            # успешная регистрация, запись данных в бд
             cur.execute(f"INSERT INTO users (username, password) VALUES ('{username}', '{password}')")
-
             con.commit()
             valid.setText('Вы успешно зарегистрированы!')
             valid.exec()
@@ -102,24 +102,27 @@ class Another_autharisation(QWidget):
 
 
     def closeEvent(self, event):
+        # обработка окна при закрытии
         from main import Entering
         if self.sender() == None:
             self.main_for = Entering()
             self.main_for.show()
         event.accept()
 
+    # функция для обратного перехода к главному меню
     def open_main_form(self):
         from main import Entering
         self.second_form = Entering()
         self.second_form.show()
         self.close()
 
+    # функция для открытия личного кабинета пользователя
     def open_second_form(self):
         self.second_form = User_inside()
         self.second_form.show()
         self.close()
 
-
+# класс личного кабинета пользователя
 class User_inside(QWidget):
     def __init__(self):
         super().__init__()
@@ -132,6 +135,7 @@ class User_inside(QWidget):
         self.tomap.clicked.connect(self.open_map)
         con = sqlite3.connect('data_base/users_data.db')
         cur = con.cursor()
+        # установка настоящего количества сделанных заметок и путешествий
         travels = cur.execute(f"""SELECT group_name FROM Files WHERE username = '{username}'""").fetchall()
         print(set(travels))
         place = cur.execute(f"""SELECT place_name FROM Files WHERE username = '{username}'""").fetchall()
@@ -141,19 +145,20 @@ class User_inside(QWidget):
         self.travels_label.setText(str(len(set(travels))))
         self.place_label.setText(str(len(set(place))))
 
+    # функция для открытия собственной карты
     def open_map(self):
         from main import MyApp
         self.second_form = MyApp(username=username)
         self.second_form.show()
         self.close()
 
-
+    # функция по открытию класса для добавления новой заметки
     def add_new_group(self):
         self.second_form = Add_file()
         self.second_form.show()
         self.close()
 
-
+    # функция по редактированию заметки
     def redact_last(self):
         self.second_form = Redact_file()
         self.second_form.show()
@@ -161,6 +166,7 @@ class User_inside(QWidget):
 
 
     def closeEvent(self, event):
+        # обработка окна при закрытии
         from main import Entering
         if self.sender() == None:
             self.main_for = Entering()
@@ -173,7 +179,7 @@ class User_inside(QWidget):
         self.second_form.show()
         self.close()
 
-
+# класс по добавлению новой заметки
 class Add_file(QWidget):
     def __init__(self):
         super().__init__()
@@ -188,29 +194,27 @@ class Add_file(QWidget):
     def adding(self):
         global counter_2
         global name_for_redacting2
-        # так себе идея с таким огромным количеством глобальных переменных..
-        print(counter_2)
+        # создание параметров для вывода вспомогательного окна-сообщения
         valid = QMessageBox()
         valid.setStyleSheet("QMessageBox {background-color: rgba(48, 57, 77, 200); font-size: 13pt;}"
                             "QLabel {font-family: 'Arial' 'Optima'; font-size: 13pt; color: white;} "
                             "QPushButton{background-color: rgba(191, 112, 151, 200); color: white;}")
         valid.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        print('here')
+        # проверка на добавление новой заметки или на повторное сохранение уже добавленной
         if name_for_redacting2 != self.plainTextEdit_2.toPlainText():
             counter_2 = 0
         name_place = self.plainTextEdit_2.toPlainText()
         name_for_redacting2 = name_place
-        print(name_place)
         name_travel = self.name_travel.text()
         note_message = self.plainTextEdit.toPlainText()
-        print('here!')
+
         con = sqlite3.connect('data_base/users_data.db')
+        # по названию определяем координаты города для проставления маркера
         geolocator = Nominatim(user_agent="Tester")  # Указываем название приложения (так нужно, да)
         location = geolocator.geocode(name_place)
-        print(location)
         cur = con.cursor()
         result = cur.execute(f'SELECT * FROM Files WHERE username = "{username}" and place_name = "{name_place}"').fetchall()
-
+        # реакции на ошибки
         if name_place == '' and self.sender().text() == 'Сохранить':
             valid.setText('Назовите город!')
             valid.exec()
@@ -223,6 +227,7 @@ class Add_file(QWidget):
                           f"<p>Для её редактирования, выберите соответствующую команду</p></body></html>")
             valid.exec()
         elif counter_2 == 1:
+            # повторное сохранение существующей заметки
             coords = f"{location.latitude}, {location.longitude}"
             print(coords)
             result1 = cur.execute(
@@ -233,6 +238,7 @@ class Add_file(QWidget):
             con.commit()
             con.close()
         else:
+            # добавление новой заметки
             coords = f"{location.latitude}, {location.longitude}"
             print(coords)
             result = cur.execute(
@@ -245,24 +251,27 @@ class Add_file(QWidget):
             con.close()
 
     def closeEvent(self, event):
+        # обработка окна при закрытии
         from main import Entering
         if self.sender() == None:
             self.main_for = Entering()
             self.main_for.show()
         event.accept()
 
+    # обработка кнопки "назад"
     def open_form_before(self):
         self.second_form = User_inside()
         self.second_form.show()
         self.close()
 
+    # очищение полей для добавления еще одной заметки с тем же путешествием
     def clean_for_add(self):
         global counter_2
         self.plainTextEdit.setPlainText('')
         self.plainTextEdit_2.setPlainText('')
         counter_2 = 0
 
-
+# класс редактирования заметки
 class Redact_file(QWidget):
     def __init__(self):
         super().__init__()
@@ -278,37 +287,36 @@ class Redact_file(QWidget):
         self.add_one_more.clicked.connect(self.find_redact_file)
         self.del_button.clicked.connect(self.del_file)
 
+    # функция с поиском необходимой редактируемой заметки
     def find_redact_file(self):
         global name_for_redacting
         global previous_username
         global counter
         flag = True
+        # создание параметров для вывода вспомогательного окна-сообщения
         valid = QMessageBox()
         valid.setStyleSheet("QMessageBox {background-color: rgba(48, 57, 77, 200); font-size: 13pt;}"
                             "QLabel {font-family: 'Arial' 'Optima'; font-size: 13pt; color: white;} "
                             "QPushButton{background-color: rgba(191, 112, 151, 200); color: white;}")
         valid.setWindowFlag(QtCore.Qt.FramelessWindowHint)
+        # поиск заметки, в названии места которой присутсвует искомое слово
+        # при повторном нажатии кнопки перелистывается на следующую найденную заметку
         if name_for_redacting in self.plainTextEdit_2.toPlainText() and name_for_redacting != '':
             counter += 1
             flag = False
+        # обнуление результатов поиска при изменении искомого слова
         if username != previous_username:
             name_for_redacting = ''
             counter = 0
-
-        print(counter)
-        print(name_for_redacting)
         try:
             con = sqlite3.connect('data_base/users_data.db')
             cur = con.cursor()
             if flag:
                 name_for_redacting = self.plainTextEdit_2.toPlainText()
-            # previous_name_for_redacting = name_for_redacting
-            print(name_for_redacting)
             result = cur.execute(f"""SELECT place_name, group_name, note FROM Files WHERE place_name LIKE '%{name_for_redacting}%' and username = '{username}'""").fetchall()
-            print(result)
             if counter > len(result) - 1:
                 counter = 0
-            print('here!')
+            # реакция на ошибки
             if not result:
                 valid.setText("Не найдено ни одной заметки с похожим названием")
                 valid.exec()
@@ -316,32 +324,29 @@ class Redact_file(QWidget):
                 valid.setText("Вы не ввели названия искомого города!")
                 valid.exec()
             else:
-                print('hrerererer')
+                # вывод информации о найденной заметке
                 self.name_travel.setText(result[counter][1])
                 self.plainTextEdit_2.setPlainText(result[counter][0])
                 self.plainTextEdit.setPlainText(result[counter][2])
-            # self.text_edit.setPlainText(result[0])
             con.commit()
             con.close()
             previous_username = username
-            # self.defaut_text = self.text_edit.toPlainText()
         except Exception:
             pass
 
+    # функция редактирования заметки
     def redacting(self):
         global username
+        # создание параметров для вывода вспомогательного окна-сообщения
         valid = QMessageBox()
         valid.setStyleSheet("QMessageBox {background-color: rgba(48, 57, 77, 200); font-size: 13pt;}"
                             "QLabel {font-family: 'Arial' 'Optima'; font-size: 13pt; color: white;} "
                             "QPushButton{background-color: rgba(191, 112, 151, 200); color: white;}")
         valid.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        print('here')
 
         name_place = self.plainTextEdit_2.toPlainText()
-        print(name_place)
         name_travel = self.name_travel.text()
         note_message = self.plainTextEdit.toPlainText()
-        print('here!!!')
         con = sqlite3.connect('data_base/users_data.db')
         cur = con.cursor()
         try:
@@ -355,23 +360,27 @@ class Redact_file(QWidget):
                 valid.setText('Изменения успешно сохранены')
                 valid.exec()
         except Exception:
-            print('ошибкааааааааааа')
+            print('непредвиденная ошибка')
 
 
     def closeEvent(self, event):
+        # обработка окна при закрытии
         from main import Entering
         if self.sender() == None:
             self.main_for = Entering()
             self.main_for.show()
         event.accept()
 
+    # обработка кнопки "назад"
     def open_form_before(self):
         self.second_form = User_inside()
         self.second_form.show()
         self.close()
 
+    # функция по удалению заметки
     def del_file(self):
         global username
+        # создание параметров для вывода вспомогательного окна-сообщения
         valid = QMessageBox()
         valid.setStyleSheet("QMessageBox {background-color: rgba(48, 57, 77, 200); font-size: 13pt;}"
                             "QLabel {font-family: 'Arial' 'Optima'; font-size: 13pt; color: white;} "
@@ -389,6 +398,8 @@ class Redact_file(QWidget):
                 valid.setText('Данная заметка не найдена!')
                 valid.exec()
             else:
+                # создание параметров для вывода вспомогательного окна-сообщения
+                # окно - подтверждение об удалении замети
                 valid2 = QMessageBox()
                 valid2.setStyleSheet("QMessageBox {background-color: rgba(48, 57, 77, 200); font-size: 13pt;}"
                                     "QLabel {font-family: 'Arial' 'Optima'; font-size: 13pt; color: white;} "
@@ -409,4 +420,4 @@ class Redact_file(QWidget):
                     self.name_travel.setText('')
                     self.plainTextEdit.setPlainText('')
         except Exception:
-            print('ошибкааааааааааа')
+            print('ошибка')

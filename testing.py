@@ -3,63 +3,10 @@ from PyQt5 import uic
 import math
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.Qt import *
+# подключение используемых библиотек
 
 # словарь для подсчета и вывода результатов тестирования
 SLOVAR_RESULT_TEST = {'forms/sanatory': 0, 'forms/sea': 0, 'forms/museum': 0, 'forms/mountains': 0}
-SPISOK_COORDS = [120, 180, 180, 70, 297, 150, 30, 242, 110, 20, 265, 200, 40, 370, 130, 20, 393, 165,
-                         14, 380, 190, 80, 48, 145, 70, 7, 229,
-                         40, 80, 215, 11, 98, 184, 50, -35, 168, 30, -20, 118, 26, -58, 124, 30, 116, 112]
-
-class QRegularPolygon(QGraphicsPolygonItem):
-    def __init__(self, sides, radius, center, angle=None, parent=None):
-        super(QRegularPolygon, self).__init__(parent)
-        self.setFlag(QGraphicsItem.ItemIsMovable, True)
-
-        self._sides = sides
-        self._radius = radius
-        if angle != None:
-            self._angle = angle
-        else:
-            self._angle = 0.0
-        self._center = center
-
-        points = list()
-        for s in range(self._sides):
-            angle = self._angle + (2 * math.pi * s / self._sides)
-            x = center.x() + (radius * math.cos(angle))
-            y = center.y() + (radius * math.sin(angle))
-            points.append(QPointF(x, y))
-
-        self.setPolygon(QPolygonF(points))
-
-        self.tx, self.ty = 200, 200
-
-
-class GraphicsView(QGraphicsView):
-    def __init__(self):
-        super().__init__()
-
-        self.scene = QGraphicsScene()
-        self.setScene(self.scene)
-
-        def draw_hexagon(radius, xcenter, ycenter):
-            ri = int(radius / 2.6 * math.sqrt(3))  # радиус вписанной окружности
-            sides = 6  # сторон у hexagon
-            angle = math.pi / 2
-            center = QPointF(xcenter, ycenter)
-            self.hexagon2 = QRegularPolygon(sides, ri, center, angle)
-            self.hexagon2.setPen(QPen(QColor(115, 67, 67), 4, Qt.SolidLine))
-            self.hexagon2.setBrush(QColor(153, 68, 68))
-            self.scene.addItem(self.hexagon2)
-
-        for i in range(0, 42, 3):
-            draw_hexagon(SPISOK_COORDS[i], SPISOK_COORDS[i + 1], SPISOK_COORDS[i + 2])
-
-
-class MainWindow(QWidget):
-    def __init__(self):
-        super().__init__()
-
 
 class Test1_form(QWidget):
     def __init__(self):
@@ -70,18 +17,22 @@ class Test1_form(QWidget):
         self.pushButton_2.clicked.connect(self.open_main_form)
 
     def closeEvent(self, event):
+        # обработка окна при закрытии
         from main import Entering
         if self.sender() == None:
             self.main_for = Entering()
             self.main_for.show()
         event.accept()
 
+    # функция с открытием главного меню
     def open_main_form(self):
         from main import Entering
         self.second_form = Entering()
         self.second_form.show()
         self.close()
 
+    # функция с открытием следующего вопроса теста
+    # подсчет результатов ответа на данный вопрос
     def open_test2_form(self):
         if self.radioButton.isChecked():
             SLOVAR_RESULT_TEST['forms/sea'] += 1
@@ -116,7 +67,6 @@ class Test1_form(QWidget):
             self.close()
 
 
-# класс для поиска курорта по нажатию на кнопки пользователем
 class Test2_form(QWidget):
     def __init__(self):
         super().__init__()
@@ -125,12 +75,15 @@ class Test2_form(QWidget):
         self.pushButton.clicked.connect(self.open_test3_form)
 
     def closeEvent(self, event):
+        # обработка окна при закрытии
         from main import Entering
         if self.sender() == None:
             self.main_for = Entering()
             self.main_for.show()
         event.accept()
 
+    # функция с открытием следующего вопроса теста
+    # подсчет результатов ответа на данный вопрос
     def open_test3_form(self):
         if self.radioButton.isChecked():
             SLOVAR_RESULT_TEST['forms/sanatory'] += 5
@@ -164,12 +117,15 @@ class Test3_form(QWidget):
         self.pushButton.clicked.connect(self.open_test4_form)
 
     def closeEvent(self, event):
+        # обработка окна при закрытии
         from main import Entering
         if self.sender() == None:
             self.main_for = Entering()
             self.main_for.show()
         event.accept()
 
+    # функция с открытием следующего вопроса теста
+    # подсчет результатов ответа на данный вопрос
     def open_test4_form(self):
         if self.autmn_spirng.isChecked():
             SLOVAR_RESULT_TEST['forms/sea'] += 2
@@ -202,12 +158,15 @@ class Test4_form(QWidget):
         self.pushButton.clicked.connect(self.open_test5_form)
 
     def closeEvent(self, event):
+        # обработка окна при закрытии
         from main import Entering
         if self.sender() == None:
             self.main_for = Entering()
             self.main_for.show()
         event.accept()
 
+    # функция с открытием следующего вопроса теста
+    # подсчет результатов ответа на данный вопрос
     def open_test5_form(self):
         if self.radioButton.isChecked():
             SLOVAR_RESULT_TEST['forms/sanatory'] += 1
@@ -244,14 +203,16 @@ class Test5_form(QWidget):
         self.pushButton.clicked.connect(self.open_test6_form)
 
     def closeEvent(self, event):
+        # обработка окна при закрытии
         from main import Entering
         if self.sender() == None:
             self.main_for = Entering()
             self.main_for.show()
         event.accept()
 
+    # функция с открытием следующего вопроса теста
+    # подсчет результатов ответа на данный вопрос
     def open_test6_form(self):
-        print('here')
         if self.summer.isChecked():
             SLOVAR_RESULT_TEST['forms/museum'] += 1
             SLOVAR_RESULT_TEST['forms/sanatory'] += 2
@@ -281,13 +242,15 @@ class Test6_form(QWidget):
         self.pushButton.clicked.connect(self.open_test7_form)
 
     def closeEvent(self, event):
+        # обработка окна при закрытии
         from main import Entering
         if self.sender() == None:
             self.main_for = Entering()
             self.main_for.show()
         event.accept()
 
-
+    # функция с открытием следующего вопроса теста
+    # подсчет результатов ответа на данный вопрос
     def open_test7_form(self):
         if self.radioButton.isChecked():
             SLOVAR_RESULT_TEST['forms/sea'] += 2
@@ -324,13 +287,15 @@ class Test7_form(QWidget):
         self.pushButton.clicked.connect(self.open_test8_form)
 
     def closeEvent(self, event):
+        # обработка окна при закрытии
         from main import Entering
         if self.sender() == None:
             self.main_for = Entering()
             self.main_for.show()
         event.accept()
 
-
+    # функция с открытием следующего вопроса теста
+    # подсчет результатов ответа на данный вопрос
     def open_test8_form(self):
         if self.radioButton.isChecked():
             SLOVAR_RESULT_TEST['forms/sanatory'] += 2
@@ -368,13 +333,15 @@ class Test8_form(QWidget):
         self.pushButton.clicked.connect(self.open_test9_form)
 
     def closeEvent(self, event):
+        # обработка окна при закрытии
         from main import Entering
         if self.sender() == None:
             self.main_for = Entering()
             self.main_for.show()
         event.accept()
 
-
+    # функция с открытием следующего вопроса теста
+    # подсчет результатов ответа на данный вопрос
     def open_test9_form(self):
         if self.radioButton.isChecked():
             SLOVAR_RESULT_TEST['forms/mountains'] += 7
@@ -412,12 +379,15 @@ class Test9_form(QWidget):
         self.pushButton.clicked.connect(self.open_test10_form)
 
     def closeEvent(self, event):
+        # обработка окна при закрытии
         from main import Entering
         if self.sender() == None:
             self.main_for = Entering()
             self.main_for.show()
         event.accept()
 
+    # функция с открытием следующего вопроса теста
+    # подсчет результатов ответа на данный вопрос
     def open_test10_form(self):
         if self.radioButton.isChecked():
             SLOVAR_RESULT_TEST['forms/sea'] += 7
@@ -454,12 +424,15 @@ class Test10_form(QWidget):
         self.pushButton.clicked.connect(self.open_prog_form)
 
     def closeEvent(self, event):
+        # обработка окна при закрытии
         from main import Entering
         if self.sender() == None:
             self.main_for = Entering()
             self.main_for.show()
         event.accept()
 
+    # функция с открытием следующего вопроса теста
+    # подсчет результатов ответа на данный вопрос
     def open_prog_form(self):
         if self.radioButton.isChecked():
             SLOVAR_RESULT_TEST['forms/sanatory'] += 2
@@ -493,6 +466,9 @@ class ProgressHandler(QtCore.QThread):
             self.mysignal.emit(['Загрузка', step])
             time.sleep(0.07)
 
+# класс для прогресс бара
+# показ формы обработки данных
+# (прогресс бар) - небольшая анимация, счётчик результатов
 class Interface(QWidget):
     def __init__(self):
         super().__init__()
@@ -511,19 +487,22 @@ class Interface(QWidget):
         self.handler.start()
 
     def signal_handler(self, value):
+        # реация при полной загрузке данных
         if value[1] == 100:
             self.pushButton.show()
 
+        # надпись на прогресс баре при загрузке
         if value[0] == 'Загрузка':
             current_value = self.progressBar.value()
             self.progressBar.setValue(current_value + 1)
 
+    # открытие класс для показа результатов
     def next_form(self):
         self.second_form = Museum_form()
         self.second_form.show()
         self.close()
 
-
+# класс с показанием результата прохождения теста
 class Museum_form(QWidget):
     def __init__(self):
         super().__init__()
@@ -539,6 +518,8 @@ class Museum_form(QWidget):
                                  "}")
         self.label.setObjectName("label")
         slovar_value = sorted(SLOVAR_RESULT_TEST.values())
+        # проверка на максимальное количество баллов в словаре
+        # и добавление соответствующего комментария к прохождению теста
         if SLOVAR_RESULT_TEST['forms/sea'] == max(slovar_value):
             self.setWindowTitle('Море, однозначно море')
             self.label.setText('<html><head/><body><p align="center"> Вы ратуете за комфорт и размеренный отдых, </p>'
@@ -585,26 +566,27 @@ class Museum_form(QWidget):
                                       "\nQPushButton:hover {\nbackground-color: rgba(127, 143, 24, 200);\n}")
         self.pushButton.setObjectName("pushButton")
 
+        # добавление карты России из шестиугольников
+        from main import GraphicsView
         self.view = GraphicsView()
-        # self.sld = QSlider(Qt.Horizontal, self)
-        # self.sld.setRange(-180, 180)
-        # self.sld.valueChanged.connect(self.changeValue)
 
         vbox = QVBoxLayout(self)
         vbox.addWidget(self.label)
         vbox.addWidget(self.view)
-        # vbox.addWidget(self.sld)
         vbox.addWidget(self.pushButton)
 
         self.pushButton.clicked.connect(self.open_map_form)
 
     def closeEvent(self, event):
+        # обработка окна при закрытии
         from main import Entering
         if not self.pushButton.isChecked():
             self.main_for = Entering()
             self.main_for.show()
         event.accept()
 
+    # функция с обращением к глобальной карте,
+    # но с изначальным выделением полученного в результате теста направления
     def open_map_form(self):
         global SLOVAR_RESULT_TEST
         from main import MyApp
