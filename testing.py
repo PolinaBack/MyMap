@@ -34,6 +34,7 @@ class Test1_form(QWidget):
     # функция с открытием следующего вопроса теста
     # подсчет результатов ответа на данный вопрос
     def open_test2_form(self):
+        global SLOVAR_RESULT_TEST
         if self.radioButton.isChecked():
             SLOVAR_RESULT_TEST['forms/sea'] += 1
             SLOVAR_RESULT_TEST['forms/sanatory'] += 1
@@ -85,6 +86,7 @@ class Test2_form(QWidget):
     # функция с открытием следующего вопроса теста
     # подсчет результатов ответа на данный вопрос
     def open_test3_form(self):
+        global SLOVAR_RESULT_TEST
         if self.radioButton.isChecked():
             SLOVAR_RESULT_TEST['forms/sanatory'] += 5
             SLOVAR_RESULT_TEST['forms/museum'] += 2
@@ -127,6 +129,7 @@ class Test3_form(QWidget):
     # функция с открытием следующего вопроса теста
     # подсчет результатов ответа на данный вопрос
     def open_test4_form(self):
+        global SLOVAR_RESULT_TEST
         if self.autmn_spirng.isChecked():
             SLOVAR_RESULT_TEST['forms/sea'] += 2
             SLOVAR_RESULT_TEST['forms/sanatory'] += 1
@@ -168,6 +171,7 @@ class Test4_form(QWidget):
     # функция с открытием следующего вопроса теста
     # подсчет результатов ответа на данный вопрос
     def open_test5_form(self):
+        global SLOVAR_RESULT_TEST
         if self.radioButton.isChecked():
             SLOVAR_RESULT_TEST['forms/sanatory'] += 1
             SLOVAR_RESULT_TEST['forms/museum'] += 2
@@ -213,6 +217,7 @@ class Test5_form(QWidget):
     # функция с открытием следующего вопроса теста
     # подсчет результатов ответа на данный вопрос
     def open_test6_form(self):
+        global SLOVAR_RESULT_TEST
         if self.summer.isChecked():
             SLOVAR_RESULT_TEST['forms/museum'] += 1
             SLOVAR_RESULT_TEST['forms/sanatory'] += 2
@@ -252,6 +257,7 @@ class Test6_form(QWidget):
     # функция с открытием следующего вопроса теста
     # подсчет результатов ответа на данный вопрос
     def open_test7_form(self):
+        global SLOVAR_RESULT_TEST
         if self.radioButton.isChecked():
             SLOVAR_RESULT_TEST['forms/sea'] += 2
             SLOVAR_RESULT_TEST['forms/mountains'] += 3
@@ -297,6 +303,7 @@ class Test7_form(QWidget):
     # функция с открытием следующего вопроса теста
     # подсчет результатов ответа на данный вопрос
     def open_test8_form(self):
+        global SLOVAR_RESULT_TEST
         if self.radioButton.isChecked():
             SLOVAR_RESULT_TEST['forms/sanatory'] += 2
             SLOVAR_RESULT_TEST['forms/sea'] += 2
@@ -343,6 +350,7 @@ class Test8_form(QWidget):
     # функция с открытием следующего вопроса теста
     # подсчет результатов ответа на данный вопрос
     def open_test9_form(self):
+        global SLOVAR_RESULT_TEST
         if self.radioButton.isChecked():
             SLOVAR_RESULT_TEST['forms/mountains'] += 7
             self.second_form = Test9_form()
@@ -389,6 +397,7 @@ class Test9_form(QWidget):
     # функция с открытием следующего вопроса теста
     # подсчет результатов ответа на данный вопрос
     def open_test10_form(self):
+        global SLOVAR_RESULT_TEST
         if self.radioButton.isChecked():
             SLOVAR_RESULT_TEST['forms/sea'] += 7
             self.second_form = Test10_form()
@@ -434,6 +443,7 @@ class Test10_form(QWidget):
     # функция с открытием следующего вопроса теста
     # подсчет результатов ответа на данный вопрос
     def open_prog_form(self):
+        global SLOVAR_RESULT_TEST
         if self.radioButton.isChecked():
             SLOVAR_RESULT_TEST['forms/sanatory'] += 2
             SLOVAR_RESULT_TEST['forms/museum'] += 3
@@ -508,7 +518,7 @@ class Museum_form(QWidget):
         super().__init__()
         uic.loadUi('forms/mainform2.ui', self)
         self.setWindowTitle('Культура')
-
+        global SLOVAR_RESULT_TEST
         self.label = QtWidgets.QLabel()
         self.label.setStyleSheet("QLabel {\n"
                                  "font-family: \'Arial\' \'Optima\';\n"
@@ -554,7 +564,7 @@ class Museum_form(QWidget):
                                '<p align="center">с новой культурой, ее традициями. Музеи, памятники архитектуры, </p>'
                                '<p align="center">набережные и т. д. — даже не важно, сможете ли вы обойти все интересные</p>'
                                '<p align="center"> места незнакомого города, главное — идти навстречу новым впечатлениям!</p>'
-                               '<p>Подходящие города-курорты: Томск, Владивосток, Тула</p></body></html>')
+                               '<p align="center">Подходящие города-курорты: Томск, Владивосток, Тула</p></body></html>')
 
         self.pushButton = QtWidgets.QPushButton()
         self.pushButton.setGeometry(QtCore.QRect(300, 200, 111, 28))

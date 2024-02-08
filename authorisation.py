@@ -277,7 +277,7 @@ class Redact_file(QWidget):
         super().__init__()
         global username
         uic.loadUi('forms/redact_place.ui', self)
-        self.setWindowTitle('Добавление заметки')
+        self.setWindowTitle('Редактирование заметки')
         print('here')
         self.label_3.setText('Имя редактируемого места')
         self.add_one_more.setText('Найти заметку')
