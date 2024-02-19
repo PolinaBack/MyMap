@@ -232,7 +232,6 @@ class MyApp(QWidget):
         try:
             # Создание базы карты
             self.m = folium.Map(location=[64.31828134466166, 93.04953260959422], zoom_start=3)
-            # Добавление фильтров и разных видов карт
             Geocoder().add_to(self.m)
             # Создание отдельного фильтра для показателя на карте
             self.fg = folium.FeatureGroup(name='Курорты в горах', show=show_mountains)
@@ -243,9 +242,9 @@ class MyApp(QWidget):
             self.m.add_child(self.sanat)
             self.m.add_child(self.museum)
             self.m.add_child(self.seas)
-            print('here')
+            # функции с подключением базы данных и отображение
+            # городов на карте
             self.basdan()
-            print('here')
             self.all_resorts()
             self.sanatories()
             self.museums()

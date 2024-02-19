@@ -13,6 +13,7 @@ class Test1_form(QWidget):
         super().__init__()
         uic.loadUi('forms/test1.ui', self)
         self.setWindowTitle('Вопрос 1/10')
+        # обработка кнопок для перехода на другие окна
         self.pushButton.clicked.connect(self.open_test2_form)
         self.pushButton_2.clicked.connect(self.open_main_form)
 
@@ -34,6 +35,8 @@ class Test1_form(QWidget):
     # функция с открытием следующего вопроса теста
     # подсчет результатов ответа на данный вопрос
     def open_test2_form(self):
+        # функция с открытием следующего вопроса теста
+        # подсчет результатов ответа на данный вопрос
         global SLOVAR_RESULT_TEST
         if self.radioButton.isChecked():
             SLOVAR_RESULT_TEST['forms/sea'] += 1
@@ -480,6 +483,9 @@ class ProgressHandler(QtCore.QThread):
 # показ формы обработки данных
 # (прогресс бар) - небольшая анимация, счётчик результатов
 class Interface(QWidget):
+    # класс прогресс бара
+    # показ формы обработки данных
+    # (прогресс бар) - небольшая анимация, счётчик результатов
     def __init__(self):
         super().__init__()
         uic.loadUi('forms/error.ui', self)
@@ -508,12 +514,12 @@ class Interface(QWidget):
 
     # открытие класс для показа результатов
     def next_form(self):
-        self.second_form = Museum_form()
+        self.second_form = Result_form()
         self.second_form.show()
         self.close()
 
 # класс с показанием результата прохождения теста
-class Museum_form(QWidget):
+class Result_form(QWidget):
     def __init__(self):
         super().__init__()
         uic.loadUi('forms/mainform2.ui', self)
