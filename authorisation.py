@@ -3,6 +3,7 @@ from PyQt5 import QtCore
 from PyQt5.Qt import *
 import sqlite3
 from geopy.geocoders import Nominatim
+from werkzeug.security import generate_password_hash, check_password_hash
 # подключение используемых библиотек
 
 # глобальные переменные для работы создания и изменения заметок
@@ -43,11 +44,12 @@ class Another_autharisation(QWidget):
 
         result = cur.execute(f'SELECT * FROM Users WHERE username = "{username}"').fetchall()
         # проверка на ошибки
-        if result != [] and result[0][2] == password:
+        print(check_password_hash(result[0][2], password))
+        if result != [] and check_password_hash(result[0][2], password):
             user_id = cur.execute(f'SELECT * FROM Users WHERE username = "{username}"').fetchall()[0][0]
             print('here')
             self.open_second_form()
-        elif result != [] and result[0][2] != password:
+        elif result != [] and not check_password_hash(result[0][2], password):
             valid.setText('Проверьте правильность ввода пароля!')
             valid.exec()
         else:
@@ -92,7 +94,7 @@ class Another_autharisation(QWidget):
 
         elif not result and username != '' and password != '':
             # успешная регистрация, запись данных в бд
-            cur.execute(f"INSERT INTO users (username, password) VALUES ('{username}', '{password}')")
+            cur.execute(f"INSERT INTO users (username, password) VALUES ('{username}', '{generate_password_hash(password)}')")
             con.commit()
             valid.setText('Вы успешно зарегистрированы!')
             valid.exec()
